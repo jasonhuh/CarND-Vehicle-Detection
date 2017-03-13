@@ -36,7 +36,7 @@ class HogFeatureUtil:
     def single_img_features(img, color_space='YCrCb', spatial_size=(32, 32),
                             hist_bins=32, orient=9, 
                             pix_per_cell=8, cell_per_block=2, hog_channel="ALL",
-                            spatial_feat=True, hist_feat=True, hog_feat=True):    
+                            spatial_feat=False, hist_feat=True, hog_feat=True):    
         #1) Define an empty list to receive features
         img_features = []
         #2) Apply color conversion if other than 'RGB'
@@ -85,7 +85,7 @@ class HogFeatureUtil:
     def extract_features(imgs, color_space='YCrCb', spatial_size=(32, 32),
                             hist_bins=32, orient=9, 
                             pix_per_cell=8, cell_per_block=2, hog_channel=0,
-                            spatial_feat=True, hist_feat=True, hog_feat=True):
+                            spatial_feat=False, hist_feat=True, hog_feat=True):
         # Create a list to append feature vectors to
         features = []
         # Iterate through the list of images
@@ -149,7 +149,7 @@ class HogFeatureUtil:
 #        hog_channel = "ALL" # Can be 0, 1, 2, or "ALL"
         spatial_size = (32, 32) # Spatial binning dimensions
         hist_bins = 32    # Number of histogram bins
-        spatial_feat = True # Spatial features on or off
+        spatial_feat = False # Spatial features on or off
         hist_feat = True # Histogram features on or off
         hog_feat = True # HOG features on or off
 #        y_start_stop = [400, 720] # Min and max in y to search in slide_window()

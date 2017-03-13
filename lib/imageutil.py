@@ -10,9 +10,10 @@ class ImageUtil:
         font = cv2.FONT_HERSHEY_COMPLEX
         textpanel = np.zeros((240, 640, 3), dtype=np.uint8)
         text_pos_y = 30
-        for text in text_arr:
-            cv2.putText(textpanel, text, (10, text_pos_y), font, 1, (255, 255, 255), 2)
-            text_pos_y += 30
+        if text_arr is not None:
+            for text in text_arr:
+                cv2.putText(textpanel, text, (10, text_pos_y), font, 1, (255, 255, 255), 2)
+                text_pos_y += 30
 
         # assemble the screen example
         canvas = np.zeros((1080, 1920, 3), dtype=np.uint8)
@@ -64,7 +65,7 @@ class ImageUtil:
 
 
     @staticmethod    
-    def draw_boxes(img, bboxes, color=(0, 0, 255), thick=6):
+    def draw_boxes(img, bboxes, color=(0, 0, 256), thick=6):
         """ Define a function to draw bounding boxes
         """
         # Make a copy of the image

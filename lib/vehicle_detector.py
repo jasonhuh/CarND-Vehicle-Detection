@@ -83,19 +83,20 @@ class VehicleDetector:
         
     @staticmethod        
     def filterOutFalsePositives(bboxes):
+        # TODO: Real-world scenario requires more sophisticated rules for 
+        # handling objects as a false positives
         min_tolerance = 48
-        max_tolerance = 200
+        max_tolerance = 150
         box_list = []
         for bbox in bboxes:
-#            print('{} - {}'.format(bbox[0], bbox[1]))
             if abs(bbox[1][0] - bbox[0][0]) >= min_tolerance and abs(bbox[1][1] - bbox[0][1]) <= max_tolerance:
                 box_list.append(bbox)
             else:
-                print('Skip')
+                print('Skip... object is too big or too small')
         return box_list
         
     @staticmethod
-    def apply_heat_map(img, box_list, threshold=1):
+    def find_heat(img, box_list, threshold=1):
         # Add heat to each box in box list
         heat = np.zeros_like(img[:,:,0]).astype(np.float) 
         heat = HeatmapUtil.add_heat(heat,box_list)
@@ -104,18 +105,25 @@ class VehicleDetector:
         heat = HeatmapUtil.apply_threshold(heat, threshold)
         
         # Visualize the heatmap when displaying    
-        heatmap = np.clip(heat, 0, 255)
+#        heatmap = np.clip(heat, 0, 255)
+        
+#        return heatmap, heat
+        return heat
+        
+    @staticmethod
+    def get_heatmap_labels(heat, threshold=1):
+
+        heat = HeatmapUtil.apply_threshold(heat, threshold)
+        
+        # Visualize the heatmap when displaying    
+        heatmap = np.clip(heat, 0, 255)        
         
         # Find final boxes from heatmap using label function
         labels = label(heatmap)
-        #draw_img = HeatmapUtil.draw_labeled_bboxes(np.copy(img), labels)
         bboxes = HeatmapUtil.get_labeled_bboxes(labels)
         bboxes = VehicleDetector.filterOutFalsePositives(bboxes)
 
-        for bbox in bboxes:
-            cv2.rectangle(img, bbox[0], bbox[1], (0,0,255), 6)
-        
-        return img, heatmap
+        return bboxes, heatmap
     
     @staticmethod    
     def search_and_classify(img, svc, X_scaler, color_space = 'YCrCb', y_start_stop = [400, 720], orient = 9, 

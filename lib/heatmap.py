@@ -23,6 +23,9 @@ class HeatmapUtil:
 
     @staticmethod    
     def get_labeled_bboxes(labels):
+        min_tolerance = 48
+        max_tolerance = 200
+        
         box_list = []
         # Iterate through all detected cars
         for car_number in range(1, labels[1]+1):
@@ -33,7 +36,10 @@ class HeatmapUtil:
             nonzerox = np.array(nonzero[1])
             # Define a bounding box based on min/max x and y
             bbox = ((np.min(nonzerox), np.min(nonzeroy)), (np.max(nonzerox), np.max(nonzeroy)))
-            box_list.append(bbox)
+            if abs(bbox[1][0] - bbox[0][0]) >= min_tolerance and abs(bbox[1][1] - bbox[0][1]) <= max_tolerance:            
+                box_list.append(bbox)
+            else:
+                print('Skip... box is too big or too small')                
             # Draw the box on the image
             #cv2.rectangle(img, bbox[0], bbox[1], (0,0,255), 6)
         # Return the image

@@ -1,31 +1,28 @@
 import glob
 import cv2
 import numpy as np
+import matplotlib.pyplot as plt
 
 class ImageUtil:
 
     @staticmethod
-    def image_console(mainScreen, sc1, sc2, sc3, sc4, text_arr):
-
-        font = cv2.FONT_HERSHEY_COMPLEX
-        textpanel = np.zeros((240, 640, 3), dtype=np.uint8)
-        text_pos_y = 30
-        if text_arr is not None:
-            for text in text_arr:
-                cv2.putText(textpanel, text, (10, text_pos_y), font, 1, (255, 255, 255), 2)
-                text_pos_y += 30
+    def image_console(main_screen, sc1, sc2):
 
         # assemble the screen example
-        canvas = np.zeros((1080, 1920, 3), dtype=np.uint8)
-        if mainScreen is not None: canvas[0:720, 0:1280] = mainScreen
+        canvas = np.zeros((720, 1280, 3), dtype=np.uint8)
+        if main_screen is not None: canvas[0:720, 0:1280] = main_screen
 
-        if sc2 is not None: canvas[0:240, 1280:1600] = cv2.resize(sc2, (320, 240), interpolation=cv2.INTER_AREA)
-        if sc4 is not None: canvas[0:240, 1600:1920] = cv2.resize(sc4, (320, 240), interpolation=cv2.INTER_AREA)
-
-        canvas[240:480, 1280:1920] = textpanel
-        if sc3 is not None: canvas[720:1080, 0:1280] = cv2.resize(sc3, (1280, 360), interpolation=cv2.INTER_AREA) * 4
+        if sc1 is not None: canvas[0:180, 0:320] = cv2.resize(sc1, (320, 180), interpolation=cv2.INTER_AREA)
+        if sc2 is not None: canvas[0:180, 320:640] = cv2.resize(sc2, (320, 180), interpolation=cv2.INTER_AREA)
 
         return canvas
+
+    @staticmethod
+    def convert_2d_to_3d(heatmap):
+        cmap = plt.get_cmap('hot')
+        heatmap_img = cmap(heatmap)
+        heatmap_img = np.delete(heatmap_img, 3, 2)
+        return heatmap_img
 
     @staticmethod
     def load_cars_notcars_images():

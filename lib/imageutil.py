@@ -12,8 +12,8 @@ class ImageUtil:
         canvas = np.zeros((720, 1280, 3), dtype=np.uint8)
         if main_screen is not None: canvas[0:720, 0:1280] = main_screen
 
-        if sc1 is not None: canvas[0:180, 0:320] = cv2.resize(sc1, (320, 180), interpolation=cv2.INTER_AREA)
-        if sc2 is not None: canvas[0:180, 320:640] = cv2.resize(sc2, (320, 180), interpolation=cv2.INTER_AREA)
+        if sc1 is not None: canvas[10:190, 10:330] = cv2.resize(sc1, (320, 180), interpolation=cv2.INTER_AREA)
+        if sc2 is not None: canvas[10:190, 330:650] = cv2.resize(sc2, (320, 180), interpolation=cv2.INTER_AREA)
 
         return canvas
 

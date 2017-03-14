@@ -34,9 +34,9 @@ class HogFeatureUtil:
     # just for a single image rather than list of images
     @staticmethod
     def single_img_features(img, color_space='YCrCb', spatial_size=(32, 32),
-                            hist_bins=32, orient=9, 
+                            hist_bins=32, orient=9,
                             pix_per_cell=8, cell_per_block=2, hog_channel="ALL",
-                            spatial_feat=False, hist_feat=True, hog_feat=True):    
+                            spatial_feat=False, hist_feat=True, hog_feat=True):
         #1) Define an empty list to receive features
         img_features = []
         #2) Apply color conversion if other than 'RGB'
@@ -51,7 +51,7 @@ class HogFeatureUtil:
                 feature_image = cv2.cvtColor(img, cv2.COLOR_RGB2YUV)
             elif color_space == 'YCrCb':
                 feature_image = cv2.cvtColor(img, cv2.COLOR_RGB2YCrCb)
-        else: feature_image = np.copy(img)      
+        else: feature_image = np.copy(img)
         #3) Compute spatial features if flag is set
         if spatial_feat == True:
             spatial_features = ImageUtil.bin_spatial(feature_image, size=spatial_size)
@@ -67,17 +67,17 @@ class HogFeatureUtil:
             if hog_channel == 'ALL':
                 hog_features = []
                 for channel in range(feature_image.shape[2]):
-                    hog_features.extend(HogFeatureUtil.get_hog_features(feature_image[:,:,channel], 
-                                        orient, pix_per_cell, cell_per_block, 
-                                        vis=False, feature_vec=True))      
+                    hog_features.extend(HogFeatureUtil.get_hog_features(feature_image[:,:,channel],
+                                        orient, pix_per_cell, cell_per_block,
+                                        vis=False, feature_vec=True))
             else:
-                hog_features = HogFeatureUtil.get_hog_features(feature_image[:,:,hog_channel], orient, 
+                hog_features = HogFeatureUtil.get_hog_features(feature_image[:,:,hog_channel], orient,
                             pix_per_cell, cell_per_block, vis=False, feature_vec=True)
             #8) Append features to list
             img_features.append(hog_features)
-    
+
         #9) Return concatenated array of features
-        return np.concatenate(img_features)            
+        return np.concatenate(img_features)
 
     # Define a function to extract features from a list of images
     # Have this function call bin_spatial() and color_hist()

@@ -174,7 +174,7 @@ For each frame, I captured the positions of the positive detections in a deque. 
 
 ####1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
 
-Initially, I encountered the problems where the detected position of vehicles was jumping around for each frame with some false positives. I resolved this issue by storing the deteced positives (hot windows) to a queue, and generating the final position of vehicles by averaging the accumulated hot windows through heatmap and `label` function of `scipy.ndimage.measurements` library.
+Initially, I encountered the problems where the detected position of vehicles was jumping around for each frame with some false positives. I resolved this issue by storing the deteced labels to a queue, and generating the final labels of vehicles by averaging the accumulated labels through heatmap and `label` function of `scipy.ndimage.measurements` library.
 
 The pipeline may fail if the application encounters the following scenarios:
 

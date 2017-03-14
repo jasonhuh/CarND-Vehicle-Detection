@@ -41,6 +41,7 @@ The goals / steps of this project are the following:
 
 [img_heatmaps]: ./output_images/heatmaps.png
 [img_detection_windows]: ./output_images/detection_windows.png
+[img_video_snapshot]: ./output_images/video_snapshot.png
 
 ###Histogram of Oriented Gradients (HOG)
 
@@ -163,9 +164,9 @@ Here's a [link to my video result](./project_video.mp4)
 
 For each frame, I captured the positions of the positive detections in a deque. Once the deque hold 10 positive detections, I generated the heatmap using the deque, and used the scipy.ndimage.measurements.label() method to generate the final positions.
 
-### Here are six frames and their corresponding heatmaps:
+### Here is a snapshot of a generated video:
 
-![alt text][img_heatmaps]
+![alt text][img_video_snapshot]
 
 ---
 
@@ -173,13 +174,17 @@ For each frame, I captured the positions of the positive detections in a deque. 
 
 ####1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
 
-Initially, I encountered the problems where the detected position of vehicles was jumping around for each frame with some false positives. I resolved this issue by storing the deteced position of vehicles to a queue, and generating the final position of vehicles by averaging the accumulated positions through heatmap and label technique.
+Initially, I encountered the problems where the detected position of vehicles was jumping around for each frame with some false positives. I resolved this issue by storing the deteced positives (hot windows) to a queue, and generating the final position of vehicles by averaging the accumulated hot windows through heatmap and `label` function of `scipy.ndimage.measurements` library.
 
 The pipeline may fail if the application encounters the following scenarios:
-- A strangely looking vehicle that does not look similiar to train data.
-- Shadow or poor weather condition that createa 
 
-I can further improve the application by the following actions:
-- Enhancing the training dataset to contain more diverse vehicle images and non-vehicle images. 
-- Adjust the HOG parameters further to maximize the positive detections
+* A vehicle is not detected due to brightness, shadow or poor weather condition that either creates noise or hinders the system from detecting vehicles
+* A strangely looking vehicle that does not look similiar to train data.
 
+I can further improve the performance and/or accuracy of the application by the following actions:
+
+* Enhancing the training dataset to contain more diverse vehicle images and non-vehicle images. 
+* Adjust the HOG parameters further to maximize the positive detections
+* Leverage *Kalman filter* which is a much more robust algorithm that uses a series of measurements observed overtime.
+* Instead of using the HOG features with SVC, use the YOLO real-time object detection
+* Instead of using the HOG features with SVC, use the SSD multibox approach

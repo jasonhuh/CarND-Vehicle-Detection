@@ -19,7 +19,7 @@ class ImageUtil:
 
     @staticmethod
     def convert_2d_to_3d(heatmap):
-        cmap = plt.get_cmap('hot')
+        cmap = plt.get_cmap('jet')
         heatmap_img = cmap(heatmap)
         heatmap_img = np.delete(heatmap_img, 3, 2)
         return heatmap_img

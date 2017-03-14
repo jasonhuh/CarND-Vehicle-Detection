@@ -63,7 +63,6 @@ class ImageUtil:
         # Return the individual histograms, bin_centers and feature vector
         return hist_features
 
-
     @staticmethod    
     def draw_boxes(img, bboxes, color=(0, 0, 256), thick=6):
         """ Define a function to draw bounding boxes

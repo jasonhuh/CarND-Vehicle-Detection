@@ -10,13 +10,25 @@ from hogfeatures import HogFeatureUtil
 class Trainer:
 
     @staticmethod
-    def generate_train_and_test_data(cars, notcars, sample_size=500, color_space='YCrCb', orient=32,
+    def generate_train_and_test_data(cars, notcars, color_space='YCrCb', orient=32,
                      pix_per_cell=16, cell_per_block=2, hog_channel="ALL", spatial_size = (32, 32),
                                      hist_bins=32, spatial_feat = False, hist_feat = True, hog_feat = True):
-        # Reduce the sample size because HOG features are slow to compute
-        # The quiz evaluator times out after 13s of CPU time
-        # cars = cars[0:sample_size]
-        # notcars = notcars[0:sample_size]
+        """
+        Generate training data set
+        :param cars:
+        :param notcars:
+        :param color_space:
+        :param orient:
+        :param pix_per_cell:
+        :param cell_per_block:
+        :param hog_channel:
+        :param spatial_size:
+        :param hist_bins:
+        :param spatial_feat:
+        :param hist_feat:
+        :param hog_feat:
+        :return:
+        """
 
         t = time.time()
         car_features = HogFeatureUtil.extract_features(cars, color_space=color_space,
@@ -46,7 +58,15 @@ class Trainer:
         return X_scaler, scaled_X, y
 
     @staticmethod
-    def train(svc, scaled_X, y, save_to='model.pkl'):
+    def train(clf, scaled_X, y, save_to='model.pkl'):
+        """
+        Train model
+        :param clf:
+        :param scaled_X:
+        :param y:
+        :param save_to:
+        :return:
+        """
         
         # Split up data into randomized training and test sets
         rand_state = np.random.randint(0, 100)
@@ -58,27 +78,35 @@ class Trainer:
         # Check the training time for the SVC
         t=time.time()
         
-        svc.fit(X_train, y_train)
+        clf.fit(X_train, y_train)
         t2 = time.time()
         print(round(t2-t, 2), 'Seconds to train SVC...')
         # Check the score of the SVC
-        print('Test Accuracy of SVC = ', round(svc.score(X_test, y_test), 4))
+        print('Test Accuracy of SVC = ', round(clf.score(X_test, y_test), 4))
         # Check the prediction time for a single sample
         t=time.time()
         n_predict = 10
-        print('My SVC predicts: ', svc.predict(X_test[0:n_predict]))
+        print('My SVC predicts: ', clf.predict(X_test[0:n_predict]))
         print('For these',n_predict, 'labels: ', y_test[0:n_predict])
         t2 = time.time()
         print(round(t2-t, 5), 'Seconds to predict', n_predict,'labels with SVC')
 
-        Trainer.save_model(svc, save_to)
-        return svc
+        Trainer.save_model(clf, save_to)
+        return clf
 
     @staticmethod
-    def save_model(svc, file_name='model.pkl'):
-        # Save the trained model to a file system
-        joblib.dump(svc, file_name)
+    def save_model(clf, file_name='model.pkl'):
+        """ Save the trained model to a file system
+        :param clf:
+        :param file_name:
+        :return:
+        """
+        joblib.dump(clf, file_name)
 
     @staticmethod
     def load_model(file_name='model.pkl'):
+        """ Load model from a file system
+        :param file_name:
+        :return:
+        """
         return joblib.load(file_name)

@@ -12,6 +12,16 @@ class HogFeatureUtil:
     @staticmethod
     def get_hog_features(img, orient, pix_per_cell, cell_per_block,
                             vis=False, feature_vec=True):
+        """
+        Get HOG features
+        :param img:
+        :param orient:
+        :param pix_per_cell:
+        :param cell_per_block:
+        :param vis:
+        :param feature_vec:
+        :return:
+        """
         # Call with two outputs if vis==True
         if vis == True:
             features, hog_image = hog(img, orientations=orient,

@@ -43,9 +43,9 @@ The goals / steps of this project are the following:
 [img_detection_windows]: ./output_images/detection_windows.png
 [img_video_snapshot]: ./output_images/video_snapshot.png
 
-###Histogram of Oriented Gradients (HOG)
+### Histogram of Oriented Gradients (HOG)
 
-####1. Explain how (and identify where in your code) you extracted HOG features from the training images.
+#### 1. Explain how (and identify where in your code) you extracted HOG features from the training images.
 
 The code for extracting hog features is contained in the `HogFeatureUtil.get_hog_features` method (`lib/hogfeatures.py`).
 
@@ -72,7 +72,7 @@ As you can see in the 4th to 6th code cells in the Jupyter Notebook, to extract 
 
 ![alt text][img_hog_examples]
 
-####2. Explain how you settled on your final choice of HOG parameters.
+#### 2. Explain how you settled on your final choice of HOG parameters.
 
 The code for examining the HOG parameters is contained in the 7th code cell of Jupyter Notebook. In the cell, I leveraged `interact` attribute of ipywidgets library to explorer the different variations of the HOG parameters.
 
@@ -104,9 +104,9 @@ The train was complete with 97.18% of accuracy, and the model was saved as "mode
 
 ![alt text][img_training_output]
 
-###Sliding Window Search
+### Sliding Window Search
 
-####1. Describe how (and identify where in your code) you implemented a sliding window search.  How did you decide what scales to search and how much to overlap windows?
+#### 1. Describe how (and identify where in your code) you implemented a sliding window search.  How did you decide what scales to search and how much to overlap windows?
 
 The code for the sliding window search is contained in the `VehicleDetector.get_windows` method and `VehicleDetector.get_hot_windows` method (`lib/vehicle_detector.py`).
 
@@ -114,7 +114,7 @@ Considering that all objects including cars get smaller on a further distance, I
 
 ![alt text][img_detection_windows]
 
-####2. Show some examples of test images to demonstrate how your pipeline is working.  What did you do to optimize the performance of your classifier?
+#### 2. Show some examples of test images to demonstrate how your pipeline is working.  What did you do to optimize the performance of your classifier?
 
 The code for the demostration of how the pipeline works is contained in the 14th to 17th code cells of the Jupyter Notebook. Ultimately, I chose the sliding window based search with the aforementioned HOG parameters instead of the YCrCb 3-channel HOG features because, for some reason, the YCrCb 3-channel HOG features approach was significantly slower compared to the sliding window approach.
 
@@ -170,9 +170,9 @@ For each frame, I captured the positions of the positive detections in a deque. 
 
 ---
 
-###Discussion
+### Discussion
 
-####1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
+#### 1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
 
 Initially, I encountered the problems where the detected position of vehicles was jumping around for each frame with some false positives. I resolved this issue by storing the deteced labels to a queue, and generating the final labels of vehicles by averaging the accumulated labels through heatmap and `label` function of `scipy.ndimage.measurements` library.
 

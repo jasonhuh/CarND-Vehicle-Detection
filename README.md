@@ -32,13 +32,6 @@ The goals / steps of this project are the following:
 [img_cars_notcars]: ./output_images/cars_notcars.png
 [img_hog_examples]: ./output_images/hog_examples.png
 [img_training_output]: ./output_images/training_output.png
-[image3]: ./examples/sliding_windows.jpg
-[image4]: ./examples/sliding_window.jpg
-[image5]: ./examples/bboxes_and_heat.png
-[image6]: ./examples/labels_map.png
-[image7]: ./examples/output_bboxes.png
-[video1]: ./project_video.mp4
-
 [img_heatmaps]: ./output_images/heatmaps.png
 [img_detection_windows]: ./output_images/detection_windows.png
 [img_video_snapshot]: ./output_images/video_snapshot.png
@@ -100,7 +93,7 @@ I used LinearSVC as the classifier for this project. The code for the training i
  
 Once the training data was generated from the above steps, the training data has been passed to the Trainer.train method where the training data was randomly shuffled, split to the train and test data, and then the train data has been fit using LinearSVC instance.
 
-The train was complete with 97.18% of accuracy, and the model was saved as "model.pkl" for a future use.
+The train was complete with 98.73% of accuracy, and the model was saved as "model.pkl" for a future use.
 
 ![alt text][img_training_output]
 

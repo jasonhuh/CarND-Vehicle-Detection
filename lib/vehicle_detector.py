@@ -59,10 +59,14 @@ class VehicleDetector:
            ((96, 96),  [400, 500]),
            ((128, 128),[450, 578]),
            ((192, 192),[450, 720])]
+        # windows_slides = [((96, 96),  [400, 500]),
+        #    ((144, 144),  [400, 500]),
+        #    ((192, 192),[430, 550]),
+        #    ((192, 192),[460, 580])]
 
         for xy_window, y_start_stop in windows_slides:
             windodws_segment = VehicleDetector.__slide_window(img_shape, x_start_stop=[None, None], y_start_stop=y_start_stop,
-                                                 xy_window=xy_window, xy_overlap=(0.5, 0.5))
+                                                 xy_window=xy_window, xy_overlap=(0.75, 0.75))
             windows = windows + windodws_segment
         return windows
     
